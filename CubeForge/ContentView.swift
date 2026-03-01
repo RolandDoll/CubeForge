@@ -19,6 +19,19 @@ struct ContentView: View {
     }
 }
 
+struct CollectionCheckListView: View {
+    @State private var acquired: Bool = false
+    
+    var body: some View {
+        VStack {
+            Toggle(
+                isOn: $acquired, label: {Text("Lightning, Army of One")}).toggleStyle(.button)
+        }
+        // Checklist
+
+    }
+}
+
 #Preview {
-    ContentView()
+    CollectionCheckListView()
 }
