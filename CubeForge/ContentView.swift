@@ -22,29 +22,61 @@ struct ContentView: View {
 class Card: Identifiable {
     let id = UUID()
     let name: String
+    let baseCount: Int
     
-    init(name: String) {
+    init(name: String, baseCount: Int) {
         self.name = name
+        self.baseCount = baseCount
     }
 }
 
-private    var lightning = Card(name: "Lightning, Army of One")
-private var cid15 = Card(name: "Cid XV")
-private var superDuperSephy = Card(name: "Normura Art Sephiroth")
+private var lightning = Card(name: "Lightning, Army of One", baseCount: 0)
+private var cid15 = Card(name: "Cid XV", baseCount: 0)
+private var superDuperSephy = Card(name: "Normura Art Sephiroth (He's very cool)", baseCount: 0)
+private var cloive = Card(name: "Clive, Ifrit's Dominant", baseCount: 1)
+
+struct EntryView: View {
+    var title: String
+    @State var baseCount: Int
+    @State private var borderlessAcquired: Bool? = nil
+    @State private var showcaseAcquired: Bool? = nil
+    
+    struct AcquiredDisplay: View {
+        @State var baseCount: Int
+        var body: some View {
+            if (baseCount > 0) {
+                Text("Y")
+            } else {
+                Text("N")
+            }
+        }}
+    
+    var body: some View {
+        let cubeComplete = baseCount > 4
+        
+        HStack {
+            AcquiredDisplay(baseCount: baseCount)
+            cubeComplete ? (Text("Y")) : Text("N")
+            Text(title)
+        }
+        
+    }
+}
 
 struct CollectionCheckListView: View {
     @State private var acquired: Bool = false
     
-    var missingCards = [lightning, cid15, superDuperSephy]
+    var missingCards = [lightning, cid15, superDuperSephy, cloive]
     
     var body: some View {
         VStack {
             List(missingCards) {
-                Text($0.name)
+                EntryView(title: $0.name, baseCount: $0.baseCount)
             }
+        
         }
-        // Checklist
-
+        
+        
     }
 }
 
