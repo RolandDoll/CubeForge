@@ -19,13 +19,29 @@ struct ContentView: View {
     }
 }
 
+class Card: Identifiable {
+    let id = UUID()
+    let name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+}
+
+private    var lightning = Card(name: "Lightning, Army of One")
+private var cid15 = Card(name: "Cid XV")
+private var superDuperSephy = Card(name: "Normura Art Sephiroth")
+
 struct CollectionCheckListView: View {
     @State private var acquired: Bool = false
     
+    var missingCards = [lightning, cid15, superDuperSephy]
+    
     var body: some View {
         VStack {
-            Toggle(
-                isOn: $acquired, label: {Text("Lightning, Army of One")}).toggleStyle(.button)
+            List(missingCards) {
+                Text($0.name)
+            }
         }
         // Checklist
 
