@@ -49,7 +49,7 @@ struct EntryView: View {
             } else {
                 Text("N")
             }
-        }}
+        }};
     
     var body: some View {
         let cubeComplete = baseCount > 4
@@ -69,17 +69,35 @@ struct CollectionCheckListView: View {
     var missingCards = [lightning, cid15, superDuperSephy, cloive]
     
     var body: some View {
-        VStack {
-            List(missingCards) {
-                EntryView(title: $0.name, baseCount: $0.baseCount)
+        ZStack {
+            VStack {
+    //            List(missingCards) {
+    //                EntryView(title: $0.name, baseCount: $0.baseCount)
+    //            }
+                CardView(title: lightning.name, color: .yellow)
+                CardView(title: cloive.name, color: .red)
             }
-        
-        }
+        }.background(.gray).padding(16)
+
         
         
     }
 }
 
+struct CardView: View {
+    let title: String
+    let color: Color
+    
+    var body: some View {
+        
+        ZStack {
+            RoundedRectangle(cornerRadius: 25).fill(color)
+            Text(title)
+        }.frame(width: 300, height: 200)
+    }
+}
+
 #Preview {
     CollectionCheckListView()
+//    CardView()
 }
