@@ -7,17 +7,6 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
 
 class Card: Identifiable {
     let id = UUID()
@@ -31,39 +20,11 @@ class Card: Identifiable {
 }
 
 
-// Probably going to need a grid here.
+// Sample Entries
 private var lightning = Card(name: "Lightning, Army of One", baseCount: 0)
 private var cid15 = Card(name: "Cid XV", baseCount: 0)
 private var superDuperSephy = Card(name: "Normura Art Sephiroth (He's very cool)", baseCount: 0)
 private var cloive = Card(name: "Clive, Ifrit's Dominant", baseCount: 1)
-
-struct EntryView: View {
-    var title: String
-    @State var baseCount: Int
-    @State private var borderlessAcquired: Bool? = nil
-    @State private var showcaseAcquired: Bool? = nil
-    
-    struct AcquiredDisplay: View {
-        @State var baseCount: Int
-        var body: some View {
-            if (baseCount > 0) {
-                Text("Y")
-            } else {
-                Text("N")
-            }
-        }};
-    
-    var body: some View {
-        let cubeComplete = baseCount > 4
-        
-        HStack {
-            AcquiredDisplay(baseCount: baseCount)
-            cubeComplete ? (Text("Y")) : Text("N")
-            Text(title)
-        }
-        
-    }
-}
 
 var darkPurple = Color(#colorLiteral(red: 0.157, green: 0.063, blue: 0.306, alpha: 1)) // #28104e
 var mediumPurple = Color(#colorLiteral(red: 0.388, green: 0.153, blue: 0.627, alpha: 1)) // #6327a0
@@ -85,11 +46,13 @@ struct CollectionCheckListView: View {
         ZStack {
             bg
             VStack {
-    //            List(missingCards) {
-    //                EntryView(title: $0.name, baseCount: $0.baseCount)
-    //            }
                 CardView(title: lightning.name, color: .yellow, count: lightning.baseCount)
                 CardView(title: cloive.name, color: .red, count: cloive.baseCount)
+                CardView(title: "Vivi Orniter", color: .yellow, count: 3)
+                CardView(title: "Jill, Shiva's Dominant", color: .blue, count: 5)
+                CardView(title: "Aerith Gainsborough", color: .white, count: 5)
+                CardView(title: "Adamant Adamantoise", color: .green, count: 2)
+                CardView(title: "Buster Sword", color: .gray, count: 4)
             }
         }.ignoresSafeArea()
     }
@@ -103,12 +66,15 @@ struct CardView: View {
     
 //    Probably
     var body: some View {
-        
         ZStack {
             RoundedRectangle(cornerRadius: 25).fill(cardColor)
             HStack {
-                Text("\(count)/5")
-                Text(title)
+                ZStack {
+                    Circle().fill(color).frame(width: 75, height: 75)
+                    Text("\(count)/5")
+                }.padding(10).frame(alignment: Alignment.leading)
+                Spacer()
+                Text(title).padding(10)
             }
         }.frame(width: 350, height: 100)
     }

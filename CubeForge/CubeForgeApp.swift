@@ -11,7 +11,7 @@ import SwiftUI
 struct CubeForgeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CollectionCheckListView()
         }
     }
 }
