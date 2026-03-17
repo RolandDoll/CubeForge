@@ -30,6 +30,8 @@ class Card: Identifiable {
     }
 }
 
+
+// Probably going to need a grid here.
 private var lightning = Card(name: "Lightning, Army of One", baseCount: 0)
 private var cid15 = Card(name: "Cid XV", baseCount: 0)
 private var superDuperSephy = Card(name: "Normura Art Sephiroth (He's very cool)", baseCount: 0)
@@ -63,37 +65,52 @@ struct EntryView: View {
     }
 }
 
+var darkPurple = Color(#colorLiteral(red: 0.157, green: 0.063, blue: 0.306, alpha: 1)) // #28104e
+var mediumPurple = Color(#colorLiteral(red: 0.388, green: 0.153, blue: 0.627, alpha: 1)) // #6327a0
+var lightPurple = Color(#colorLiteral(red: 0.592, green: 0.271, blue: 0.796, alpha: 1)) // #9745cb
+var cardColor = Color(#colorLiteral(red: 0.871, green: 0.675, blue: 0.961, alpha: 1)) // #deacf5
+
+
+// Manipulate root of ZStakc for app wide background color? Who knows how flexible that actually is though
+// meh, fuck it we ball. EA- it's in the game.
 struct CollectionCheckListView: View {
     @State private var acquired: Bool = false
     
     var missingCards = [lightning, cid15, superDuperSephy, cloive]
     
+    var bg = LinearGradient(colors:[darkPurple, mediumPurple, lightPurple], startPoint: .topLeading, endPoint: .bottomTrailing)
+    
+    
     var body: some View {
         ZStack {
+            bg
             VStack {
     //            List(missingCards) {
     //                EntryView(title: $0.name, baseCount: $0.baseCount)
     //            }
-                CardView(title: lightning.name, color: .yellow)
-                CardView(title: cloive.name, color: .red)
+                CardView(title: lightning.name, color: .yellow, count: lightning.baseCount)
+                CardView(title: cloive.name, color: .red, count: cloive.baseCount)
             }
-        }.background(.gray).padding(16)
-
-        
-        
+        }.ignoresSafeArea()
     }
 }
 
 struct CardView: View {
     let title: String
     let color: Color
+    let count: Int
     
+    
+//    Probably
     var body: some View {
         
         ZStack {
-            RoundedRectangle(cornerRadius: 25).fill(color)
-            Text(title)
-        }.frame(width: 300, height: 200)
+            RoundedRectangle(cornerRadius: 25).fill(cardColor)
+            HStack {
+                Text("\(count)/5")
+                Text(title)
+            }
+        }.frame(width: 350, height: 100)
     }
 }
 
